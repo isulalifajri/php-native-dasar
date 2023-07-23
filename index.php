@@ -21,17 +21,34 @@ $koneksi = mysqli_connect("localhost", "root", "", "test");
              font-family:fantasy;
              font-size:30px;
         }
-        
         .flip:hover{
             background: blue;
             color:white;
+        }
+        .flip.active{
+            background: #303654;
+            color:#fff;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        table, th, td {
+            border: 1px solid silver;
+        }
+        th, td {
+            padding: 10px;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
         }
     </style>
 </head>
 <body> 
     <h1 style="text-align:center;">Daftar Soal</h1>
     <div class="dsp-flex">
-        <p class="flip" onclick="myFunction()">No 1</p>
+        <p class="flip active" onclick="myFunction()">No 1</p>
         <p class="flip" onclick="myFunction1()">No 2</p>
     </div>
     <div id="n1" style="margin:20px">
@@ -97,8 +114,8 @@ $koneksi = mysqli_connect("localhost", "root", "", "test");
             ?>
     </div>
     <div id="n2" style="display:none; margin:20px">
-       Output :
-       <table  cellpadding="7" cellspacing="">
+    <h3>Tabel sebagai berikut : </h3>
+       <table  cellpadding="7" cellspacing="3">
          <thead>
            <tr>
               <th>Group 1</th>
@@ -111,13 +128,15 @@ $koneksi = mysqli_connect("localhost", "root", "", "test");
 					  
                 include 'koneksi.php';
                 $data_k = mysqli_query($koneksi, "SELECT * FROM list_name");
+                $no = 0;
                 if (mysqli_num_rows($data_k)) {
                     while ($data = mysqli_fetch_array($data_k)) {
-
+                    $no++;
                 ?>
                  <tr>
-                    <td><?php echo $data['nik'], "-", $data['name'];?></td>
-                    
+                    <td><?php echo $no ?></td>
+                    <td><?php echo $data['nik'];?></td>
+                    <td><?php echo $data['name'];?></td>
                  </tr>
             <?php 
             } }
@@ -125,17 +144,89 @@ $koneksi = mysqli_connect("localhost", "root", "", "test");
            </tbody>
         </table>
 
-        
+        <h2>Membuat sebuah tabel dengan looping list, Hasil di bawah ini : </h2>
+
+            <?php
+                include 'koneksi.php';
+                $result = mysqli_query($koneksi,"SELECT * FROM list_name");
+            ?>
+            <table class="table table-striped mt30">
+                <thead>
+                    <tr>
+                        <th>Group 1</th>
+                        <th>Group 2</th>
+                        <th>Group 3</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                    $i = 0; $trEnd = 0;
+                    while ($row = mysqli_fetch_array($result)){
+                        if($i == 0){
+                            echo '<tr>';
+                        }
+                        echo '<td>'.$row['nik'].' - '.$row['name'].'</td>';
+                        if($i == 2){
+                            $i = 0; $trEnd = 1;
+                        }else{
+                            $trEnd = 0; $i++;
+                        }
+                        if($trEnd == 1) {
+                            echo '</tr>';
+                        }
+                    }
+                    if($trEnd == 0) echo '</tr>';
+                ?>
+                </tbody>
+            </table>
+
+            <br>
+            <h3>Tampil secara horizontal</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Group 1</th>
+                        <th>Group 2</th>
+                        <th>Group 3</th>
+                    </tr>
+                </thead>
+            <tbody>
+            <?php
+                include 'koneksi.php';
+                $result = mysqli_query($koneksi, "SELECT * FROM list_name");
+                $i = 0;
+                echo '<table><tr>';
+                    while ($row = mysqli_fetch_array($result)){
+                        if ($i++ == 3) echo '</tr><tr>';
+                        echo '<td>'.$row['nik'].' - '.$row['name'].'</td>';
+                }
+                echo '</tr></table>';
+            ?>
+            </tbody>
+            </table>
+            
     </div>
 </body>
 <script>
+let a = document.querySelectorAll('p.flip');
+
+for (var i = 0; i < a.length; i++) {
+    let ab = i;
+       a[i].setAttribute('id','active-'+ ab);
+
+}
+
 function myFunction() {
   document.getElementById("n1").style.display = "block";
   document.getElementById("n2").style.display = "none";
+  document.querySelector("#active-0").classList.add('active');
+  document.querySelector("#active-1").classList.remove('active');
 }
 function myFunction1() {
-  document.getElementById("n1").style.display = "none";
-  document.getElementById("n2").style.display = "block";
+    document.getElementById("n1").style.display = "none";
+    document.getElementById("n2").style.display = "block";
+    document.querySelector("#active-0").classList.remove('active');
+    document.querySelector("#active-1").classList.add('active');
 }
 </script>
 </html>
