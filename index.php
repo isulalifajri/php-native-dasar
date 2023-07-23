@@ -37,10 +37,25 @@ $koneksi = mysqli_connect("localhost", "root", "", "test");
     <div id="n1" style="margin:20px">
         <h1>Mencari Kelipatan dari Bilangan 1 - 10</h1>
         <?php
+            printf("kelipatan 1 : ");
+                for($a=1;$a<=10;$a++){
+                    $ab = $a % 1 == 0;
+                    if ( $a != $ab ){
+                        echo $a;
+                    }else{
+                        echo "<font style='color:blue;'> $a </font>";
+                    }
+                }
+            ?>
+            <br>
+        <?php
             printf("kelipatan 2 : ");
-                for ($i= 1; $i <= 10; $i++) { 
-                    if ( $i % 2 == 0 ) {
-                        echo "<font style='color:blue;'> $i </font>";
+                for($a=1;$a<=10;$a++){
+                    $ab = $a % 2 == 0;
+                    if ( $a != $ab ){
+                        echo $a;
+                    }else{
+                        echo "<font style='color:blue;'> $a </font>";
                     }
                 }
             ?>
@@ -48,8 +63,12 @@ $koneksi = mysqli_connect("localhost", "root", "", "test");
         <?php
             printf("kelipatan 3 : ");
                 for ($i= 1; $i <= 10; $i++) { 
-                    if ( $i % 3 == 0 ) {
+                    $ii = $i % 3 == 0;
+                    if( $ii == $i) {
                         echo "<font style='color:blue;'> $i </font>";
+                    }
+                    else{
+                        echo "<font style='letter-spacing:1px;'> $i </font>";
                     }
                 }
             ?>
@@ -57,7 +76,10 @@ $koneksi = mysqli_connect("localhost", "root", "", "test");
         <?php
             printf("kelipatan 4 : ");
                 for ($i= 1; $i <= 10; $i++) { 
-                    if ( $i % 4 == 0 ) {
+                    $ab = $i % 4 == 0;
+                    if ( $i != $ab ) {
+                        echo "<font> $i </font>";
+                    }else{
                         echo "<font style='color:blue;'> $i </font>";
                     }
                 }
@@ -66,8 +88,10 @@ $koneksi = mysqli_connect("localhost", "root", "", "test");
         <?php
             printf("kelipatan 5 : ");
                 for ($i= 1; $i <= 10; $i++) { 
-                    if ( $i % 5 == 0 ) {
+                    if ( ($i % 5 == 0) == $i ) {
                         echo "<font style='color:blue;'> $i </font>";
+                    }else{
+                        echo "<font> $i </font>";
                     }
                 }
             ?>
